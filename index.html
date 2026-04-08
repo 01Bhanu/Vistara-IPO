@@ -148,18 +148,24 @@ body{
   transition:1s;
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:15px;
-  padding:15px;
+  gap:20px;
+  padding:20px;
 }
 .slide.active{opacity:1}
 
+/* ✅ FIXED IMAGE ALIGNMENT */
 .slide img{
   width:100%;
-  max-width:380px;
-  height:230px;
+  height:240px;
   object-fit:cover;
   border-radius:16px;
   box-shadow:0 10px 30px rgba(0,0,0,0.6);
+  transition:0.3s;
+}
+
+/* 🔥 HOVER EFFECT (bonus polish) */
+.slide img:hover{
+  transform:scale(1.05);
 }
 
 .title{
@@ -316,7 +322,7 @@ function createFirework(x,y){
   }
 }
 
-// 🚀 ROCKET WITH PERFECT BURST
+// 🚀 ROCKET
 function launchRocket(){
   let r=document.createElement('div');
   r.className='rocket';
@@ -333,7 +339,6 @@ function launchRocket(){
     pos += 8;
     r.style.bottom = pos + "px";
 
-    // spark trail
     let spark=document.createElement('div');
     spark.className='spark';
     spark.style.left=startX+"px";
@@ -341,24 +346,17 @@ function launchRocket(){
     document.body.appendChild(spark);
     setTimeout(()=>spark.remove(),800);
 
-    // BURST HERE (FIXED)
     if(pos >= explodeHeight){
       clearInterval(interval);
-
       createFirework(startX, window.innerHeight - explodeHeight);
-
       r.remove();
     }
 
   },30);
 }
 
-// LAUNCH LOOP
-setInterval(()=>{
-  launchRocket();
-},900);
+setInterval(()=>{ launchRocket(); },900);
 
-// RANDOM BURSTS
 setInterval(()=>{
   createFirework(Math.random()*window.innerWidth,Math.random()*300);
 },2000);
