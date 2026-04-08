@@ -19,9 +19,31 @@ body{
   overflow:hidden;
 }
 
+/* 🎉 BANNER */
+.banner{
+  position:absolute;
+  top:10px;
+  left:50%;
+  transform:translateX(-50%);
+  background:linear-gradient(90deg,#facc15,#38bdf8,#f472b6);
+  color:#000;
+  padding:8px 20px;
+  border-radius:30px;
+  font-weight:700;
+  font-size:16px;
+  box-shadow:0 0 25px rgba(255,255,255,0.5);
+  animation: glow 2s infinite alternate;
+  z-index:10;
+}
+
+@keyframes glow{
+  from{box-shadow:0 0 10px rgba(255,255,255,0.3)}
+  to{box-shadow:0 0 30px rgba(255,255,255,1)}
+}
+
 .container{
   display:grid;
-  grid-template-rows: 18% 10% 25% 47%;
+  grid-template-rows: 18% 10% 27% 45%;
   height:100vh;
   padding:20px;
 }
@@ -43,7 +65,7 @@ body{
 
 @keyframes floatLogo{
   0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-8px)}
+  50%{transform:translateY(-10px)}
 }
 
 .message{
@@ -57,7 +79,7 @@ body{
   font-size:42px;
   font-weight:700;
   letter-spacing:2px;
-  background:linear-gradient(90deg,#38bdf8,#facc15);
+  background:linear-gradient(90deg,#38bdf8,#facc15,#f472b6);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
@@ -77,18 +99,10 @@ body{
   border-radius:18px;
   text-align:center;
   min-width:120px;
-  box-shadow:0 8px 30px rgba(0,0,0,0.4);
 }
 
-.value{
-  font-size:36px;
-  font-weight:bold
-}
-
-.label{
-  font-size:13px;
-  opacity:0.7
-}
+.value{font-size:36px;font-weight:bold}
+.label{font-size:13px;opacity:0.7}
 
 /* CLOCK */
 .clock{
@@ -99,7 +113,6 @@ body{
   border-radius:50%;
   margin:auto;
 }
-
 .hand{
   position:absolute;
   width:2px;
@@ -109,7 +122,6 @@ body{
   left:50%;
   transform-origin:bottom;
 }
-
 .center-dot{
   position:absolute;
   width:8px;
@@ -121,72 +133,90 @@ body{
   transform:translate(-50%,-50%);
 }
 
-/* VIDEO SECTION */
-.video-slider{
+/* SLIDER */
+.slider{
   position:relative;
-  border-radius:20px;
-  padding:20px;
-  background:rgba(255,255,255,0.05);
-  box-shadow:0 10px 40px rgba(0,0,0,0.5);
-
-  display:grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap:20px;
-}
-
-/* VIDEO BOX */
-.video-box{
-  width:100%;
-  aspect-ratio: 16 / 9;
   overflow:hidden;
-  border-radius:14px;
-  position:relative;
+  border-radius:20px;
 }
 
-.video-box iframe{
+.slide{
+  position:absolute;
   width:100%;
   height:100%;
-  border:none;
+  opacity:0;
+  transition:1s;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  padding:15px;
+}
+.slide.active{opacity:1}
+
+.slide img{
+  width:100%;
+  max-width:380px;
+  height:230px;
+  object-fit:cover;
+  border-radius:16px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.6);
 }
 
-/* 🔥 FIX ONLY FOR 3rd VIDEO */
-.video-box.third iframe{
-  transform: scale(1.1); /* zoom to remove black bars */
-  transform-origin: center;
-}
-
-/* HOVER */
-.video-box:hover{
-  transform:scale(1.04);
-  transition:0.4s;
-}
-
-.video-title{
+.title{
   position:absolute;
-  bottom:10px;
+  bottom:12px;
   left:20px;
-  font-size:20px;
-  font-weight:600;
+  font-size:22px;
 }
 
-/* BUBBLES */
-.bubble{
+/* 🎆 FIREWORK */
+.firework{
   position:absolute;
-  bottom:-100px;
-  background:rgba(255,255,255,0.1);
+  width:6px;
+  height:6px;
   border-radius:50%;
-  animation: rise 10s infinite ease-in;
+  animation: explode 1.2s ease-out forwards;
 }
 
-@keyframes rise{
-  0%{transform:translateY(0);opacity:0}
-  50%{opacity:1}
-  100%{transform:translateY(-120vh);opacity:0}
+@keyframes explode{
+  to{
+    transform:translate(var(--x),var(--y)) scale(0.5);
+    opacity:0;
+  }
 }
+
+/* ✨ SPARK */
+.spark{
+  position:absolute;
+  width:3px;
+  height:3px;
+  background:white;
+  border-radius:50%;
+  animation: sparkFade 1s linear forwards;
+}
+
+@keyframes sparkFade{
+  to{
+    transform:translateY(20px);
+    opacity:0;
+  }
+}
+
+/* 🚀 ROCKET */
+.rocket{
+  position:absolute;
+  bottom:-60px;
+  width:4px;
+  height:35px;
+  background:linear-gradient(#fff,#facc15);
+}
+
 </style>
 </head>
 
 <body>
+
+<div class="banner">🎉 Celebrating 7 Years of Excellence</div>
 
 <div class="container">
 
@@ -213,57 +243,126 @@ body{
     </div>
   </div>
 
-  <!-- VIDEO SECTION -->
-  <div class="video-slider">
-
-    <div class="video-box">
-      <iframe src="https://www.youtube.com/embed/agJ21Hee8AE?autoplay=1&mute=1&loop=1&playlist=agJ21Hee8AE"></iframe>
+  <div class="slider">
+    <div class="slide active">
+      <img src="img/event1.JPG">
+      <img src="img/event2.JPG">
+      <img src="img/event3.JPG">
+      <div class="title">Our Events</div>
     </div>
 
-    <div class="video-box">
-      <iframe src="https://www.youtube.com/embed/HJdDno4QG7s?autoplay=1&mute=1&loop=1&playlist=HJdDno4QG7s"></iframe>
+    <div class="slide">
+      <img src="img/leadership2.JPG">
+      <img src="img/leadership1.JPG">
+      <img src="img/leadership3.JPG">
+      <div class="title">Leadership</div>
     </div>
 
-    <div class="video-box third">
-      <iframe src="https://www.youtube.com/embed/rqXDnMGkQP0?autoplay=1&mute=1&loop=1&playlist=rqXDnMGkQP0"></iframe>
+    <div class="slide">
+      <img src="img/team1.jpeg">
+      <img src="img/team3.jpeg">
+      <img src="img/team2.jpeg">
+      <div class="title">Our Team</div>
     </div>
-
-    <div class="video-title">Our Journey</div>
-
   </div>
 
 </div>
 
 <script>
-// BUBBLES
-for(let i=0;i<15;i++){
-  let b=document.createElement('div');
-  b.className='bubble';
-  b.style.left=Math.random()*100+'%';
-  b.style.width=b.style.height=(20+Math.random()*40)+'px';
-  b.style.animationDuration=(5+Math.random()*5)+'s';
-  document.body.appendChild(b);
-}
-
-// COUNTDOWN + SMOOTH CLOCK
-const target = new Date("Jan 1, 2032 00:00:00").getTime();
+// COUNTDOWN
+const target = new Date("Jan 1, 2032").getTime();
 
 setInterval(()=>{
-  const now = new Date();
-  const gap = target - now.getTime();
+  const now=new Date();
+  const gap=target-now.getTime();
 
-  document.getElementById('d').innerText = Math.floor(gap/(1000*60*60*24));
-  document.getElementById('h').innerText = Math.floor((gap%(1000*60*60*24))/(1000*60*60));
-  document.getElementById('m').innerText = Math.floor((gap%(1000*60*60))/(1000*60));
+  d.innerText=Math.floor(gap/(1000*60*60*24));
+  h.innerText=Math.floor((gap%(1000*60*60*24))/(1000*60*60));
+  m.innerText=Math.floor((gap%(1000*60*60))/(1000*60));
 
-  const seconds = now.getSeconds();
-  const ms = now.getMilliseconds();
-  const smooth = seconds + ms/1000;
-  const degree = smooth * 6;
-
-  document.getElementById('secondHand').style.transform = `rotate(${degree}deg)`;
-
+  let sec=now.getSeconds()+now.getMilliseconds()/1000;
+  secondHand.style.transform=`rotate(${sec*6}deg)`;
 },50);
+
+// SLIDER
+let slides=document.querySelectorAll('.slide');
+let i=0;
+setInterval(()=>{
+  slides[i].classList.remove('active');
+  i=(i+1)%slides.length;
+  slides[i].classList.add('active');
+},3500);
+
+// COLORS
+const colors = ["#facc15","#38bdf8","#f472b6","#4ade80","#fb7185","#a78bfa","#ffffff"];
+
+// FIREWORK
+function createFirework(x,y){
+  for(let i=0;i<50;i++){
+    let f=document.createElement('div');
+    f.className='firework';
+
+    let color = colors[Math.floor(Math.random()*colors.length)];
+    f.style.background=color;
+
+    f.style.left=x+'px';
+    f.style.top=y+'px';
+
+    f.style.setProperty('--x',(Math.random()*350-175)+'px');
+    f.style.setProperty('--y',(Math.random()*350-175)+'px');
+
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),1200);
+  }
+}
+
+// 🚀 ROCKET WITH PERFECT BURST
+function launchRocket(){
+  let r=document.createElement('div');
+  r.className='rocket';
+
+  let startX = Math.random()*window.innerWidth;
+  let explodeHeight = 150 + Math.random()*250;
+
+  r.style.left = startX + "px";
+  document.body.appendChild(r);
+
+  let pos = 0;
+
+  let interval = setInterval(()=>{
+    pos += 8;
+    r.style.bottom = pos + "px";
+
+    // spark trail
+    let spark=document.createElement('div');
+    spark.className='spark';
+    spark.style.left=startX+"px";
+    spark.style.bottom=pos+"px";
+    document.body.appendChild(spark);
+    setTimeout(()=>spark.remove(),800);
+
+    // BURST HERE (FIXED)
+    if(pos >= explodeHeight){
+      clearInterval(interval);
+
+      createFirework(startX, window.innerHeight - explodeHeight);
+
+      r.remove();
+    }
+
+  },30);
+}
+
+// LAUNCH LOOP
+setInterval(()=>{
+  launchRocket();
+},900);
+
+// RANDOM BURSTS
+setInterval(()=>{
+  createFirework(Math.random()*window.innerWidth,Math.random()*300);
+},2000);
+
 </script>
 
 </body>
